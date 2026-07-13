@@ -1,0 +1,31 @@
+name: Compilar a EXE
+
+on:
+  workflow_dispatch: # Nos permite activar la compilación manualmente con un botón
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Descargar código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias y PyInstaller
+        run: |
+          pip install pillow pyinstaller
+
+      - name: Compilar Script a EXE
+        run: |
+          pyinstaller --noconfirm --onedir --windowed main.py
+
+      - name: Guardar y empaquetar ejecutable
+        uses: actions/upload-artifact@v4
+        with:
+          name: programa-recortador
+          path: dist/main/
