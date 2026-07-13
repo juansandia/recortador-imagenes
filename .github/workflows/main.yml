@@ -1,7 +1,7 @@
-name: Compilar a EXE
+name: Compilar a EXE Unico
 
 on:
-  workflow_dispatch: # Nos permite activar la compilación manualmente con un botón
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,12 +20,12 @@ jobs:
         run: |
           pip install pillow pyinstaller
 
-      - name: Compilar Script a EXE
+      - name: Compilar Script a un solo EXE
         run: |
-          pyinstaller --noconfirm --onedir --windowed main.py
+          pyinstaller --noconfirm --onefile --windowed main.py
 
       - name: Guardar y empaquetar ejecutable
         uses: actions/upload-artifact@v4
         with:
-          name: programa-recortador
-          path: dist/main/
+          name: programa-recortador-unico
+          path: dist/main.exe
